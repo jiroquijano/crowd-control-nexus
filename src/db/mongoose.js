@@ -5,7 +5,8 @@ const mongooseUrl = `mongodb+srv://${USER}:${PASS}@nexus-db-0-bnrup.mongodb.net/
 
 mongoose.connect(mongooseUrl,{
         useNewUrlParser:true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     }).then(()=>{
         console.log('Connected to nexus-db!');
     }).catch((error)=>{
