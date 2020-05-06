@@ -1,0 +1,19 @@
+{
+  "name": "crowd-control-nexus",
+  "version": "1.0.0",
+  "description": "this is the central backend of the crowd control system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nexus",
+    "crowd",
+    "control"
+  ],
+  "author": "jiro quijano",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
