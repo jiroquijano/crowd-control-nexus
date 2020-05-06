@@ -26,12 +26,7 @@ router.get('/nexus/:id',async(req,res)=>{
 });
 
 //add station to Nexus.
-/* POST body:
-*  {
-*       "nexusId": <target nexus id>,
-*       "stationType": <station type>
-*  }
-*/
+// POST body: {nexusId, stationType}
 router.post('/nexus/addstation',async (req,res)=>{
     try{
         const nexus = await Nexus.findById(req.body.nexusId);
