@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+/* NEXUS (central)
+**  Description: a nexus is a model which manages
+**  registered stations which belongs to its topology
+**  
+**  Responsibilities:
+**  -register stations
+**  -authenticate station transactions
+*/
 const nexusSchema = new mongoose.Schema({
     name: {
         type: String,
