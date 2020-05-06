@@ -22,7 +22,7 @@ const nexusSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Station'
     }],
-    owner: {
+    creator: {
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

@@ -31,7 +31,11 @@ const stationSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Client'
         }
-    }]
+    }],
+    creator:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 const Station = mongoose.model('Station',stationSchema);
