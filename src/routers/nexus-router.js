@@ -9,7 +9,7 @@ router.post('/nexus/create',async(req,res)=>{
         await newNexus.save();
         res.status(201).send(newNexus);
     }catch(error){
-        res.status(500).send({error:'failed to create nexus'});
+        res.status(500).send({error});
     }
 });
 
@@ -22,6 +22,25 @@ router.get('/nexus/:id',async(req,res)=>{
         res.send(nexus);
     }catch(error){
         res.status(500).send({error});
+    }
+});
+
+//add station to Nexus.
+/* POST body:
+*  {
+*       "nexusId": <target nexus id>,
+*       "stationType": <station type>
+*  }
+*/
+router.post('/nexus/addstation',async (req,res)=>{
+    try{
+        const nexus = await Nexus.findById(req.body.nexusId);
+        if(!nexus) return res.status(404).send({error:`No nexus with ${req.body.nexusId} found!`});
+        const result = await nexus.addStation(req.body.stationType);
+        if(result.error) return res.status(400).send({error:result.error});
+        res.send(nexus);
+    }catch(error){
+        res.status(400).send({error});
     }
 });
 
