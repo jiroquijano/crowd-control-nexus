@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 **  
 **  Responsibilities:
 **  -register stations
-**  -authenticate station transactions
+**  -manage stations
 */
 const nexusSchema = new mongoose.Schema({
     name: {

@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 const stationTypes = ['service, order, seats'];
 
+
+/* STATION (agents)
+*   Description: stations are nodes 
+*   being managed by a nexus. It also serves
+*   as the  interface for registering users.
+*   
+*   Responsibilities:
+*   - register to a nexus
+*   - register users (actual people)
+*   - displays next in queue
+*/
 const stationSchema = new mongoose.Schema({
     stationType:{
         type: String,
