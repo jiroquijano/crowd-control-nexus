@@ -2,6 +2,7 @@ const express = require('express');
 const Nexus = require('../db/models/nexus-model');
 const router = new express.Router();
 
+//Creates new Nexus in DB
 router.post('/nexus/create',async(req,res)=>{
     const newNexus = new Nexus(req.body);
     try{
@@ -12,6 +13,7 @@ router.post('/nexus/create',async(req,res)=>{
     }
 });
 
+//Fetch Nexus by ID
 router.get('/nexus/:id',async(req,res)=>{
     const idQuery = req.params.id;
     try{

@@ -6,11 +6,11 @@ const SECRET_KEY = process.env.CCS_SECRET || 'defaultsecretkey';
 /* STATION (agents)
 *   Description: stations are nodes 
 *   being managed by a nexus. It also serves
-*   as the  interface for registering users.
+*   as the  interface for registering clients.
 *   
 *   Responsibilities:
 *   - register to a nexus
-*   - register users (actual people)
+*   - register clients (actual people)
 *   - displays next in queue
 */
 const stationSchema = new mongoose.Schema({
@@ -31,10 +31,10 @@ const stationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    users:[{
-        user: {
+    clients:[{
+        client: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Client'
         }
     }]
 });
