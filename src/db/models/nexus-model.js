@@ -23,5 +23,5 @@ const nexusSchema = new mongoose.Schema({
     }]
 });
 
-const Nexus = mongoose.Model('Nexus',nexusSchema);
+const Nexus = mongoose.model('Nexus',nexusSchema);
 module.exports = Nexus;
