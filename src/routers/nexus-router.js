@@ -1,7 +1,7 @@
 const express = require('express');
 const Nexus = require('../db/models/nexus-model');
-const router = new express.Router();
 const auth = require('../middleware/auth');
+const router = new express.Router();
 
 //Creates new Nexus in DB
 router.post('/nexus/create',auth, async(req,res)=>{
@@ -68,7 +68,7 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
         res.send(nexus);
     }catch(error){
         console.log(error);
-        res.status(400).send({error:'wat'});
+        res.status(400).send({error});
     }
 });
 
