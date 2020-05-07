@@ -27,4 +27,25 @@ router.post('/users/login', async(req,res)=>{
     }
 });
 
+//see current user info
+router.get('/users/me',auth,(req,res)=>{
+    res.send(req.user);
+});
+
+//update user
+router.patch('/users/update',auth,async (req,res)=>{
+    try{
+        const allowedUpdates = req.user.accountType === 'admin' ?
+            ['username','email','password','accountType'] : ['username','email','password'];
+        const fieldsToUpdate = Object.keys(req.body).filter(curr => allowedUpdates.includes(curr));
+        fieldsToUpdate.forEach((curr)=>{
+            req.user[curr] = req.body[curr];
+        });
+        await req.user.save();
+        res.send(req.user);
+    }catch(error){
+        res.status(400).send(error);
+    }
+});
+
 module.exports = router;
