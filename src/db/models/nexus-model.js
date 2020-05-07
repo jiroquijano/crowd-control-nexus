@@ -32,13 +32,20 @@ nexusSchema.methods.addStation = async function (stationType){
     try{
         if(this.stations.length >= this.maxStations) return {error: 'Maximum number of stations reached!'};
         const newStation = new Station({stationType, nexus: this._id});
-        this.stations.push(newStation._id);
-        await this.save();
         await newStation.save();
+        return newStation;
     }catch(error){
         return {error};
     }
-}
+};
+
+//pre hook for nexus deletion to remove stations first
+//IMPORTANT!!! use {document:true} option to actually select the document, not the query
+nexusSchema.pre('deleteOne', {document: true}, async function(next){
+    const nexus = this;
+    await Station.deleteMany({nexus: nexus._id});
+    next();
+});
 
 const Nexus = mongoose.model('Nexus',nexusSchema);
 module.exports = Nexus;

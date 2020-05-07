@@ -63,9 +63,26 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
         if(!nexus) return res.status(404).send({error:`No nexus with ${req.body.nexusId} found!`});
         const result = await nexus.addStation(req.body.stationType);
         if(result.error) return res.status(400).send({error:result.error});
+        nexus.stations.push(result._id);
+        nexus.save();
         res.send(nexus);
     }catch(error){
-        res.status(400).send({error});
+        console.log(error);
+        res.status(400).send({error:'wat'});
+    }
+});
+
+//deletes a nexus with specified id
+router.delete('/nexus/delete/:id', auth, async(req,res)=>{
+    try{
+        const nexus = req.user.accountType === 'admin' ? 
+            await Nexus.findOne({_id: req.params.id}):
+            await Nexus.findOne({_id: req.params.id, creator: req.user._id});
+        if(!nexus) return res.status(404).send({error: 'Nexus not found'});
+        await nexus.deleteOne({_id: req.params.id});
+        res.send(nexus);
+    }catch(error){
+        res.status(500).send({error});
     }
 });
 
