@@ -25,15 +25,32 @@ const nexusSchema = new mongoose.Schema({
     creator: {
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    clientCounter : {
+        type: Number,
+        default: 1
     }
 });
 
-nexusSchema.methods.addStation = async function (stationType){
+nexusSchema.methods.addStation = async function (stationType, user){
     try{
         if(this.stations.length >= this.maxStations) return {error: 'Maximum number of stations reached!'};
-        const newStation = new Station({stationType, nexus: this._id});
+        const newStation = new Station({stationType, nexus: this._id, creator:user._id});
         await newStation.save();
         return newStation;
+    }catch(error){
+        return {error};
+    }
+};
+
+nexusSchema.methods.deleteStation = async function(stationId, user){
+    try{
+        const station = user.accountType === 'admin' ?
+            await Station.findOne({_id: stationId}) :
+            await Station.findOne({_id: stationId, creator:user._id});
+        if(!station) throw new Error('Station not found!');
+        await Station.deleteOne({_id: stationId});
+        return station;
     }catch(error){
         return {error};
     }

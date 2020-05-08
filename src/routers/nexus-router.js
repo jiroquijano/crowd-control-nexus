@@ -19,10 +19,10 @@ router.post('/nexus/create',auth, async(req,res)=>{
 router.get('/nexus/all',auth,async(req,res)=>{
     try{
         const results = req.user.accountType === 'admin' ? 
-        await Nexus.find({}) : 
-        await Nexus.find({
-            creator: req.user._id
-        });
+            await Nexus.find({}) : 
+            await Nexus.find({
+                creator: req.user._id
+            });
         if(!results) return res.status(404).send({error:'No Nexus available'})
         res.send(results);
     }catch(error){
@@ -61,7 +61,7 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
                 creator: req.user._id
             });
         if(!nexus) return res.status(404).send({error:`No nexus with ${req.body.nexusId} found!`});
-        const result = await nexus.addStation(req.body.stationType);
+        const result = await nexus.addStation(req.body.stationType, req.user);
         if(result.error) return res.status(400).send({error:result.error});
         nexus.stations.push(result._id);
         nexus.save();
@@ -69,6 +69,24 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
     }catch(error){
         console.log(error);
         res.status(400).send({error});
+    }
+});
+
+//delete station with specified id
+//DELETE body: {nexusId, stationId}
+router.delete('/nexus/deleteStation',auth, async (req,res)=>{
+    try{
+        const nexus = req.user.accountType === 'admin' ?
+            await Nexus.findOne({_id:req.body.nexusId}) :
+            await Nexus.findOne({_id:req.body.nexusId, creator:req.user._id});
+        if(!nexus) return res.status(404).send({error: 'Nexus not found!'});
+        const station = await nexus.deleteStation(req.body.stationId, req.user);
+        if(station.error) return res.status(400).send({error:station.error});
+        nexus.stations = nexus.stations.filter(curr => curr.toString() !== req.body.stationId);
+        await nexus.save();
+        res.send(nexus);
+    }catch(error){
+        res.status(400).send(error);
     }
 });
 
