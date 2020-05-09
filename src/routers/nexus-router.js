@@ -11,7 +11,7 @@ router.post('/nexus/create',auth, async(req,res)=>{
         await newNexus.save();
         res.status(201).send(newNexus);
     }catch(error){
-        res.status(500).send({error});
+        res.status(500).send({error:error.message});
     }
 });
 
@@ -26,7 +26,7 @@ router.get('/nexus/all',auth,async(req,res)=>{
         if(!results) return res.status(404).send({error:'No Nexus available'})
         res.send(results);
     }catch(error){
-        res.status(500).send(error);
+        res.status(500).send({error:error.message});
     }
 });
 
@@ -44,7 +44,7 @@ router.get('/nexus/:id',auth, async(req,res)=>{
         if(!nexus) return res.status(404).send({error: `No Nexus found with ID: ${req.params.id}`});
         res.send(nexus);
     }catch(error){
-        res.status(500).send({error});
+        res.status(500).send({error:error.message});
     }
 });
 
@@ -67,8 +67,7 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
         nexus.save();
         res.send(nexus);
     }catch(error){
-        console.log(error);
-        res.status(400).send({error});
+        res.status(400).send({error:error.message});
     }
 });
 
@@ -86,7 +85,7 @@ router.delete('/nexus/deleteStation',auth, async (req,res)=>{
         await nexus.save();
         res.send(nexus);
     }catch(error){
-        res.status(400).send(error);
+        res.status(400).send({error:error.message});
     }
 });
 
@@ -100,7 +99,7 @@ router.delete('/nexus/delete/:id', auth, async(req,res)=>{
         await nexus.deleteOne({_id: req.params.id});
         res.send(nexus);
     }catch(error){
-        res.status(500).send({error});
+        res.status(500).send({error:error.message});
     }
 });
 
