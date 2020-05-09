@@ -7,9 +7,7 @@ const stationTypes = ['service', 'order', 'seats'];
 *   as the  interface for registering clients.
 *   
 *   Responsibilities:
-*   - register to a nexus
 *   - register clients (actual people)
-*   - displays next in queue
 */
 const stationSchema = new mongoose.Schema({
     stationType:{
