@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const USER = process.env.USER || 'primo';
-const PASS = process.env.PASS || 'nexus-primo';
-const mongooseUrl = `mongodb+srv://${USER}:${PASS}@nexus-db-0-bnrup.mongodb.net/nexus-db?retryWrites=true&w=majority`
+const mongooseUrl = process.env.MONGO_URL.replace('$USER$',process.env.MONGO_USER).replace('$PASS$',process.env.MONGO_PASS);
 
 mongoose.connect(mongooseUrl,{
         useNewUrlParser:true,
