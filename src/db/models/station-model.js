@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const stationTypes = ['service', 'order', 'seats'];
+const stationTypes = ['order', 'reservation', 'priority'];
 
 /* STATION (agents)
 *   Description: stations are nodes 
