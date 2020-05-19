@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongooseUrl = process.env.MONGO_URL.replace('$USER$',process.env.MONGO_USER).replace('$PASS$',process.env.MONGO_PASS);
+const mongooseUrl = process.env.MONGO_URL;
 
 mongoose.connect(mongooseUrl,{
         useNewUrlParser:true,

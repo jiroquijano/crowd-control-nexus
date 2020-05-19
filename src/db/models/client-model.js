@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const clientSchema = new mongoose.Schema({
     name:{
-        Type: String,
+        type: String,
         required: true,
         trim: true
     },
     mobile:{
-        Type: Number,
+        type: Number,
         validate(number){
             if(number.length != 11) throw new Error('Please double check phone number');
         }
@@ -17,11 +17,11 @@ const clientSchema = new mongoose.Schema({
         unique: true
     },
     status:{
-        Type: String,
+        type: String,
         default: 'waiting'
     },
     priority:{
-        Type: String,
+        type: String,
         default: 'normal'
     }
 });

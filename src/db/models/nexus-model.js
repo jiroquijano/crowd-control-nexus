@@ -25,10 +25,6 @@ const nexusSchema = new mongoose.Schema({
     creator: {
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
-    clientCounter : {
-        type: Number,
-        default: 1
     }
 });
 
