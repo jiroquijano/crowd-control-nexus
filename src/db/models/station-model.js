@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Client = require('./client-model');
 const stationTypes = ['order', 'reservation', 'priority'];
 
 /* STATION (agents)
@@ -34,6 +35,35 @@ const stationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
+});
+
+const deleteClients = async () =>{
+    const station = this;
+    await Client.deleteMany({station: station._id});
+};
+
+stationSchema.pre('deleteMany', {document: true}, async function(next){
+    deleteClients();
+    next();
+});
+
+stationSchema.methods.addClient = async function(clientInfo){
+    try{
+        const client = new Client({
+            ...clientInfo,
+            clientNumber: this.clients.length + 1 //todo: generate from nexus
+        });
+        await client.save();
+        return client;
+    }catch(error){
+        return {error: error.message};
+    }
+    
+};
+
+stationSchema.pre('deleteOne', {document: true}, async function(next){
+    deleteClients();
+    next();
 });
 
 const Station = mongoose.model('Station',stationSchema);

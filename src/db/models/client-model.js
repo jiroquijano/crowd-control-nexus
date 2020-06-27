@@ -7,10 +7,11 @@ const clientSchema = new mongoose.Schema({
         trim: true
     },
     mobile:{
-        type: Number,
-        validate(number){
-            if(number.length != 11) throw new Error('Please double check phone number');
-        }
+        type: String,
+        validate(mobileNumber){
+            if(mobileNumber !== 'n/a' && mobileNumber.length !== 11) throw new Error('Please double check phone number');
+        },
+        default: 'n/a'
     },
     clientNumber: {
         type: Number,
@@ -23,6 +24,10 @@ const clientSchema = new mongoose.Schema({
     priority:{
         type: String,
         default: 'normal'
+    },
+    station_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Station'
     }
 });
 

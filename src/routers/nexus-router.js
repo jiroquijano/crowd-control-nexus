@@ -62,12 +62,12 @@ router.post('/nexus/addstation',auth,async (req,res)=>{
             });
         if(!nexus) return res.status(404).send();
         const station = await nexus.addStation(req.body.stationType, req.user);
-        if(station.error) return res.status(400).send();
+        if(station.error) return res.status(400).send(station.error);
         nexus.stations.push(station._id);
-        nexus.save();
+        await nexus.save();
         res.status(201).send(station);
     }catch(error){
-        res.status(400).send({error:error.message});
+        res.status(400).send(error);
     }
 });
 

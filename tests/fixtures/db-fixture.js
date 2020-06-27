@@ -25,6 +25,13 @@ const normalUserFixture = {
     token: jwt.sign({_id: normalUserId},process.env.USER_SECRET_KEY)
 };
 
+const clientFixtureId=  new mongoose.Types.ObjectId();
+const clientInformationFixture = {
+    _id: clientFixtureId,
+    name: 'client',
+    mobile: '09989661035'
+};
+
 const setUpDatabase = async ()=>{
     await Nexus.deleteMany({});
     await User.deleteMany({});
@@ -37,5 +44,6 @@ const setUpDatabase = async ()=>{
 module.exports = {
     setUpDatabase,
     adminUserFixture,
-    normalUserFixture
+    normalUserFixture,
+    clientInformationFixture
 }
