@@ -14,7 +14,7 @@ const clientSchema = new mongoose.Schema({
         default: 'n/a'
     },
     clientNumber: {
-        type: Number,
+        type: String,
         unique: true
     },
     status:{

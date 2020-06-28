@@ -2,7 +2,8 @@ const express = require ('express');
 const router = new express.Router();
 const auth = require('../middleware/auth');
 const Station = require('../db/models/station-model');
-const Client = require('../db/models/client-model');
+
+//todo: replace 'auth' middleware with a validator for verified stations
 
 router.get('/station/:id', auth, async (req,res)=>{
     try{
@@ -32,6 +33,5 @@ router.post('/station/addclient',auth, async (req,res)=>{
         res.status(500).send({error: error.message});
     }
 });
-
 
 module.exports = router;

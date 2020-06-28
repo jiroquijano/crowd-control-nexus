@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
-const {setUpDatabase, clientInformationFixture, normalUserFixture} = require('./fixtures/db-fixture');
-const {createNexus, createStationUnderNexus} = require('./helpers/nexus-helpers');
+const {setUpDatabase, normalUserFixture} = require('./fixtures/db-fixture');
+const stationHelper = require('./helpers/station-helpers');
 
 beforeEach(async()=>{
     await setUpDatabase();
@@ -12,8 +12,7 @@ test("should not be able to access station routes with no authorization", async 
 });
 
 test("should be able to fetch own station by id", async()=>{
-    const nexus = await createNexus({name:'myNewNexus'},normalUserFixture.token);
-    const station = await createStationUnderNexus(nexus.body._id,'order', normalUserFixture.token);
+    const station = await stationHelper.createNewStationUnderNexus();
     await request(app).get(`/station/${station.body._id}`)
                 .set('Authorization', `Bearer ${normalUserFixture.token}`)
                 .expect(200)
@@ -21,9 +20,7 @@ test("should be able to fetch own station by id", async()=>{
 });
 
 test("should be able to add client under station", async()=>{
-    const nexus = await createNexus({name:'myNewNexus'}, normalUserFixture.token);
-    const station = await createStationUnderNexus(nexus.body._id, 'order',normalUserFixture.token);
-    
+    const station = await stationHelper.createNewStationUnderNexus();
     const newClient = {
         name: 'jiro',
         priority: 'high',

@@ -51,7 +51,7 @@ stationSchema.methods.addClient = async function(clientInfo){
     try{
         const client = new Client({
             ...clientInfo,
-            clientNumber: this.clients.length + 1 //todo: generate from nexus
+            clientNumber: `${this.stationType[0].toUpperCase()}${this.clients.length + 1}`
         });
         await client.save();
         return client;

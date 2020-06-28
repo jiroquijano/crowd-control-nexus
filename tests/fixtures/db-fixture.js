@@ -29,7 +29,9 @@ const clientFixtureId=  new mongoose.Types.ObjectId();
 const clientInformationFixture = {
     _id: clientFixtureId,
     name: 'client',
-    mobile: '09989661035'
+    mobile: '09989661035',
+    status: 'waiting',
+    priority: 'normal'
 };
 
 const setUpDatabase = async ()=>{
